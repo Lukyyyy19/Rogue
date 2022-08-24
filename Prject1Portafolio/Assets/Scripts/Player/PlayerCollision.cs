@@ -15,5 +15,10 @@ public class PlayerCollision : MonoBehaviour
             _playerMovement._playerInputs.PlayerStates1 = PlayerStates.Stay;
         }
     }
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.GetComponent<IInteracteable>() == null) return;
+        var coins = other.GetComponent<IInteracteable>().Interact();
+        Debug.Log(coins);
+    }
 
 }
