@@ -15,4 +15,5 @@ public class PlayerCollision : MonoBehaviour
             _playerMovement._playerInputs.PlayerStates1 = PlayerStates.Stay;
         }
     }
+
 }

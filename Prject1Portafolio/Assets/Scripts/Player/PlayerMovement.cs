@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
             case PlayerStates.Right:
                 _rigidbody2D.velocity = new Vector2(speed, _rigidbody2D.velocity.y);
                 isMoving = true;
-                transform.localScale = new Vector2(1, 1);
+                transform.localScale = Vector2.one;
                 break;
             case PlayerStates.Left:
                 _rigidbody2D.velocity = new Vector2(-speed, _rigidbody2D.velocity.y);
