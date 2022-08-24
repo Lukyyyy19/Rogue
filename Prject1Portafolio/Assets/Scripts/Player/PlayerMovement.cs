@@ -8,15 +8,15 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D _rigidbody2D;
     public float speed = 5f;
     public float jumpForce = 5f;
-    private bool isGrounded;
+    [SerializeField] private bool isGrounded;
     private float jumpTime;
     private float coyoteTime;
     private float coyoteTimeStart = 0.25f;
     private bool isMoving;
     [SerializeField] private float startJumpTime;
-    public bool IsGrounded {get=> isGrounded; set => isGrounded = value; }
-    public bool IsMoving { get => isMoving;}
-    public Rigidbody2D Rigidbody2D { get => _rigidbody2D;}
+    public bool IsGrounded { get => isGrounded; set => isGrounded = value; }
+    public bool IsMoving { get => isMoving; }
+    public Rigidbody2D Rigidbody2D { get => _rigidbody2D; }
 
     private void Start()
     {
@@ -39,13 +39,16 @@ public class PlayerMovement : MonoBehaviour
             coyoteTime += Time.deltaTime;
             if (jumpTime <= 0)
             {
-                _playerInputs.PlayerStates1 = PlayerStates.Stay;
+                if (_playerInputs.PlayerStates1 != PlayerStates.Stay)
+                    _playerInputs.PlayerStates1 = PlayerStates.Fall;
             }
         }
-        else{
+        else
+        {
             jumpTime = startJumpTime;
+
             coyoteTime = 0;
-        } 
+        }
     }
     private void FixedUpdate()
     {
@@ -62,24 +65,20 @@ public class PlayerMovement : MonoBehaviour
                 transform.localScale = new Vector2(-1, 1);
                 break;
             case PlayerStates.Stay:
-                if (isGrounded)
-                {
-                    _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
-                    isMoving = false;
-                }
-                else
-                {
-                    _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _rigidbody2D.velocity.y);
-                    isMoving = false;
-                }
+                _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
+                isMoving = false;
                 break;
             case PlayerStates.Jump:
                 _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpForce);
-                
+
                 if (coyoteTime < coyoteTimeStart && !isGrounded)
                 {
                     _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpForce);
                 }
+                break;
+            case PlayerStates.Fall:
+                _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _rigidbody2D.velocity.y);
+                isMoving = false;
                 break;
         }
     }
