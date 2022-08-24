@@ -50,8 +50,12 @@ public class PlayerInputs
             else if(Mathf.Approximately(0,_touchDeltaPosition.x) && Mathf.Approximately(0,_touchDeltaPosition.y)){
                 PlayerStates1 = PlayerStates.Attack;
             }
+            // else{
+            // PlayerStates1 = PlayerStates.Nothing;
+            // }
             }
         }
+        
     }
 #endif
     #endregion

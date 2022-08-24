@@ -7,6 +7,7 @@ namespace PlayerStatesScript
         Stay,
         Jump,
         Attack,
-        Fall
+        Fall,
+        Nothing
     }
 }
